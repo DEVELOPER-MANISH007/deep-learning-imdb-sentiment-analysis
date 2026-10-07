@@ -263,11 +263,11 @@ deep-learning-imdb-sentiment-rnn/
     └── simplernn.ipynb
 ```
 
-The repository has no root-level `requirements.txt`; the manifest shown above is inside `simple_rnn_imdb/`. The root app expects the root-level `simple_rnn_imdb.h5` file next to `main.py`.
+The root-level `requirements.txt` is used when deploying the root app. A matching manifest is also included in `simple_rnn_imdb/` for that nested copy of the app. The root app expects the root-level `simple_rnn_imdb.h5` file next to `main.py`.
 
 ## Run the Streamlit App
 
-Run commands from the repository root. The only dependency manifest in the repository is `simple_rnn_imdb/requirements.txt`; it pins TensorFlow to `2.15.0`, so use a Python version compatible with that TensorFlow release.
+Run commands from the repository root. Streamlit Community Cloud currently defaults to Python 3.12; the app requirements pin TensorFlow to `2.21.0`, which supports Python 3.12 and the saved HDF5 model.
 
 Create and activate a virtual environment (Windows PowerShell):
 
@@ -279,7 +279,7 @@ python -m venv .venv
 Install the listed dependencies and start the root app:
 
 ```powershell
-python -m pip install -r simple_rnn_imdb/requirements.txt
+python -m pip install -r requirements.txt
 streamlit run main.py
 ```
 
@@ -291,4 +291,4 @@ The app loads `simple_rnn_imdb.h5` from the repository root. On its first predic
 - The root app uses the full `imdb.get_word_index()` mapping and does not filter looked-up word ranks to the model's 10,000-entry embedding vocabulary. A known low-frequency word can consequently produce an ID outside the model's supported range. This README describes the current implementation and does not imply that every arbitrary review is guaranteed to process successfully.
 - The current unknown-word fallback maps an absent token to `5` after the `+3` offset, as detailed above.
 - The app's confidence percentage is based on the model output and should not be interpreted as certainty or as an independently measured accuracy.
-- `simple_rnn_imdb/` contains a second copy of the app/model/notebooks and a requirements file. The root app command above specifically runs the root `main.py` and uses the root model file.
+- `simple_rnn_imdb/` contains a second copy of the app/model/notebooks and a matching requirements file. The root app command above specifically runs the root `main.py` and uses the root model file.
